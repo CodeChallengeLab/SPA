@@ -6,7 +6,7 @@ import {
   Paper,
   ButtonGroup,
 } from '@mui/material';
-import { rootStore } from '../state-management/rootStore';
+import { rootStore } from '../state-management/RootStore';
 
 export const CounterPage = observer(() => {
   const { counterStore } = rootStore;

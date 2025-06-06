@@ -14,5 +14,4 @@ export class RootStore {
   }
 }
 
-// Singleton pattern для глобального доступа
 export const rootStore = new RootStore();
