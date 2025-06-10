@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import type { Post, User } from '../services/types';
 import { apiClient } from '../services/ApiClientServer';
 
-export class CombinedStore {
+export class PostsUsersStore {
   posts: Post[] = [];
   users: User[] = [];
   isLoading = false;

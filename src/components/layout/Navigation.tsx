@@ -10,7 +10,7 @@ import { Link, useLocation } from 'react-router-dom';
 const navItems = [
   { path: '/', label: 'Counter' },
   { path: '/albums', label: 'Albums' },
-  { path: '/combined', label: 'Combined Data' },
+  { path: '/posts-users', label: 'Posts and Users' },
 ];
 
 export const Navigation = () => {

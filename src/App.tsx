@@ -6,18 +6,24 @@ import { router } from './router/router';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#FFC0CB',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#E91E63',
     },
   },
   typography: {
+    h1: {
+      fontWeight: 500,
+    },
+    h2: {
+      fontWeight: 400,
+    },
     h3: {
-      fontWeight: 600,
+      fontWeight: 300,
     },
     h4: {
-      fontWeight: 500,
+      fontWeight: 200,
     },
   },
 });

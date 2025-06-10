@@ -1,16 +1,16 @@
 import { CounterStore } from './CounterStore';
 import { AlbumsStore } from './AlbumStore';
-import { CombinedStore } from './CombinedStore';
+import { PostsUsersStore } from './PostsUsersStore';
 
 export class RootStore {
   counterStore: CounterStore;
   albumsStore: AlbumsStore;
-  combinedStore: CombinedStore;
+  postsUsersStore: PostsUsersStore;
 
   constructor() {
     this.counterStore = new CounterStore();
     this.albumsStore = new AlbumsStore();
-    this.combinedStore = new CombinedStore();
+    this.postsUsersStore = new PostsUsersStore();
   }
 }
 

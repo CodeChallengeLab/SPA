@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import { CounterPage } from '../pages/CounterPage';
 import { AlbumsPage } from '../pages/AlbumsPage';
-import { CombinedPage } from '../pages/CombinedPage';
+import { PostsUsersPage } from '../pages/PostsUsersPage';
 
 export const router = createBrowserRouter([
   {
@@ -18,8 +18,8 @@ export const router = createBrowserRouter([
         element: <AlbumsPage />,
       },
       {
-        path: 'combined',
-        element: <CombinedPage />,
+        path: 'posts-users',
+        element: <PostsUsersPage />,
       },
     ],
   },
