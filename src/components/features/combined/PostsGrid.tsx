@@ -17,7 +17,7 @@ const PostsGrid = observer(() => {
         spacing={3}
         sx={{ mb: 4 }}
       >
-        {postsUsersStore.posts.slice(0, 6).map((post: Post) => (
+        {postsUsersStore.posts.map((post: Post) => (
           <Grid
             key={post.id}
             size={{ xs: 12, sm: 6, md: 4 }}
