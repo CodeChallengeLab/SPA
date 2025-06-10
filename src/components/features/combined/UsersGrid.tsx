@@ -21,19 +21,7 @@ const UsersGrid: FC<Props> = observer(({itemsPerPageParam}) => {
       <Typography variant="h4" component="h2" gutterBottom>
         Users ({postsUsersStore.users.length})
       </Typography>
-      {/* <Grid
-        container
-        spacing={3}
-      >
-        {postsUsersStore.users.map((user: User) => (
-          <Grid
-            key={user.id}
-            size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
-          >
-            <UserCard user={user} />
-          </Grid>
-        ))}
-      </Grid> */}
+     
       {postsUsersStore.users.length > 0 && (
               <>
                 <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -44,7 +32,7 @@ const UsersGrid: FC<Props> = observer(({itemsPerPageParam}) => {
                   ))}
                 </Grid>
                 <SimplePagination
-                  totalItems={postsUsersStore.posts.length}
+                  totalItems={postsUsersStore.users.length}
                   onPageChange={(index) => { setStartIndex(index) }}
                   onItemsPerPageChange={(count) => { setItemsPerPage(count) }}
                   gridName="users"
