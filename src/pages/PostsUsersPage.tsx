@@ -87,8 +87,8 @@ export const PostsUsersPage = observer(() => {
 
         {postsUsersStore.hasData && (
           <Box>
-            <PostsGrid />
-            <UsersGrid />
+            <PostsGrid itemsPerPageParam={8}/>
+            <UsersGrid itemsPerPageParam={4}/>
           </Box>
         )}
       </Box>

@@ -8,52 +8,60 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import { get, set } from 'mobx';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-interface SimplePaginationProps { 
-  totalItems: number; 
-  onPageChange: (page: number) => void; 
+interface SimplePaginationProps {
+  totalItems: number;
+  onPageChange: (page: number) => void;
   gridName: string;
   onItemsPerPageChange: (itemsPerPage: number) => void;
+  itemsPerPageParam: number;
 }
 
-const itemsPerPageOptions = [5, 10, 20, 50];
-
-export const SimplePagination: React.FC<SimplePaginationProps> = ({  
-  totalItems,    
-  onPageChange, 
-  onItemsPerPageChange, 
-  gridName
+export const SimplePagination: React.FC<SimplePaginationProps> = ({
+  totalItems,
+  onPageChange,
+  onItemsPerPageChange,
+  gridName,
+  itemsPerPageParam
 }) => {
+  const itemsPerPageOptions = useMemo(() => getOptions(), []);
   if (totalItems === 0) return null;
+  function getOptions() {
+    return [itemsPerPageParam, 10, 20, 50];
+  }
 
-  const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
+  const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {    
     setCurrentPage(page);
-    onPageChange(displayInfo.start);
+    onPageChange(page* itemsPerPage - itemsPerPage);
+    
   };
 
   const handleItemsPerPageChange = (event: any) => {
     setItemsPerPage(event.target.value);
     onItemsPerPageChange(event.target.value);
   };
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const displayInfo = useMemo(() => 
-    getDisplayInfo(),[currentPage, itemsPerPage, totalItems]
-);
+  const [currentPage, setCurrentPage] = useState(1);  
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const displayInfo = useMemo(() =>
+    getDisplayInfo(), [currentPage, itemsPerPage, totalItems]
+  );
   const computedCount = useMemo(() => getCount(), [totalItems, itemsPerPage]);
- function getCount() {
-  return totalItems > 0 ? Math.ceil(totalItems / itemsPerPage) : 1;
- }
+  useEffect(() => {
+    setItemsPerPage(itemsPerPageParam);
+  }, [itemsPerPageParam]);
 
-function getDisplayInfo() {
-  return {
-    start: totalItems > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0,
-    end: Math.min(currentPage * itemsPerPage, totalItems),
-    total: totalItems
-  };
-}
+  function getCount() {
+    return totalItems > 0 ? Math.ceil(totalItems / itemsPerPage) : 1;
+  }
+
+  function getDisplayInfo() {
+    return {
+      start: totalItems > 0 ? (currentPage - 1) * itemsPerPage : -1,
+      end: Math.min(currentPage * itemsPerPage, totalItems),
+      total: totalItems
+    };
+  }
   return (
     <Box
       sx={{
@@ -85,7 +93,7 @@ function getDisplayInfo() {
         {(
           <FormControl size="small" sx={{ minWidth: 80 }}>
             <InputLabel>Per page</InputLabel>
-            <Select
+            <Select              
               value={itemsPerPage}
               label="Per page"
               onChange={handleItemsPerPageChange}
