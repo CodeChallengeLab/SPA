@@ -21,10 +21,10 @@ export const UserCard = ({ user }: UserCardProps) => (
       {user.address.city}, {user.address.street}
     </Typography>
     <Box mt={2}>
-      <Chip 
-        label={user.company.name} 
-        size="small" 
-        variant="outlined" 
+      <Chip
+        label={user.company.name}
+        size="small"
+        variant="outlined"
       />
     </Box>
   </AppCard>

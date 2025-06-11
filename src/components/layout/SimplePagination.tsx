@@ -8,7 +8,7 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 interface SimplePaginationProps {
   totalItems: number;
@@ -16,6 +16,7 @@ interface SimplePaginationProps {
   gridName: string;
   onItemsPerPageChange: (itemsPerPage: number) => void;
   itemsPerPageParam: number;
+  firstPage: number;
 }
 
 export const SimplePagination: React.FC<SimplePaginationProps> = ({
@@ -23,33 +24,31 @@ export const SimplePagination: React.FC<SimplePaginationProps> = ({
   onPageChange,
   onItemsPerPageChange,
   gridName,
-  itemsPerPageParam
+  itemsPerPageParam,
+  firstPage
 }) => {
   const itemsPerPageOptions = useMemo(() => getOptions(), []);
   if (totalItems === 0) return null;
   function getOptions() {
-    return [itemsPerPageParam, 10, 20, 50];
+    return [itemsPerPageParam, 10, 20];
   }
 
-  const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {    
+  const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
-    onPageChange(page* itemsPerPage - itemsPerPage);
-    
+    onPageChange(page);
+
   };
 
   const handleItemsPerPageChange = (event: any) => {
     setItemsPerPage(event.target.value);
     onItemsPerPageChange(event.target.value);
   };
-  const [currentPage, setCurrentPage] = useState(1);  
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [currentPage, setCurrentPage] = useState(firstPage);
+  const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageParam);
   const displayInfo = useMemo(() =>
     getDisplayInfo(), [currentPage, itemsPerPage, totalItems]
   );
   const computedCount = useMemo(() => getCount(), [totalItems, itemsPerPage]);
-  useEffect(() => {
-    setItemsPerPage(itemsPerPageParam);
-  }, [itemsPerPageParam]);
 
   function getCount() {
     return totalItems > 0 ? Math.ceil(totalItems / itemsPerPage) : 1;
@@ -93,7 +92,7 @@ export const SimplePagination: React.FC<SimplePaginationProps> = ({
         {(
           <FormControl size="small" sx={{ minWidth: 80 }}>
             <InputLabel>Per page</InputLabel>
-            <Select              
+            <Select
               value={itemsPerPage}
               label="Per page"
               onChange={handleItemsPerPageChange}

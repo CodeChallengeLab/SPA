@@ -4,14 +4,13 @@ import {
   Box,
   Typography,
   Button,
-  Paper,
   Stack,
-  CircularProgress,
-  Alert
+  CircularProgress
 } from '@mui/material';
 import { rootStore } from '../state-management/RootStore';
 import PostsGrid from '../components/features/combined/PostsGrid';
 import UsersGrid from '../components/features/combined/UsersGrid';
+import { ErrorMessage } from '../components/ErrorMessage';
 
 export const PostsUsersPage = observer(() => {
   const { postsUsersStore } = rootStore;
@@ -21,19 +20,27 @@ export const PostsUsersPage = observer(() => {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Box sx={{ py: 4 }}>
+    <Container
+      maxWidth={false}
+      disableGutters
+      sx={{
+        width: '100%',
+        minHeight: '100vh',
+        boxSizing: 'border-box',
+        p: 0,
+        m: 0,
+      }}
+    >
+      <Box sx={{ py: 2 }}>
         <Typography variant="h3" component="h1" gutterBottom align="center">
           Posts and Users
         </Typography>
-        
-        <Paper
-          elevation={2}
+
+        <Box
           sx={{
             p: 4,
             mb: 4,
-            textAlign: 'center',
-            borderRadius: 2
+            textAlign: 'center'
           }}
         >
           <Stack spacing={2} alignItems="center">
@@ -57,16 +64,24 @@ export const PostsUsersPage = observer(() => {
               )}
             </Button>
           </Stack>
-        </Paper>
-
-        {postsUsersStore.error && (
-          <Alert
-            severity="error"
-            sx={{ mb: 3 }}
-            variant="filled"
-          >
-            {postsUsersStore.error}
-          </Alert>
+        </Box>
+        {postsUsersStore.errorPosts && (
+          <ErrorMessage
+            error={
+              postsUsersStore.errorPosts === 'Network Error'
+                ? 'Failed to fetch posts: No connection to server'
+                : postsUsersStore.errorPosts
+            }
+          />
+        )}
+        {postsUsersStore.errorUsers && (
+          <ErrorMessage
+            error={
+              postsUsersStore.errorUsers === 'Network Error'
+                ? 'Failed to fetch users: No connection to server'
+                : postsUsersStore.errorUsers
+            }
+          />
         )}
 
         {postsUsersStore.isLoading && (
@@ -87,8 +102,8 @@ export const PostsUsersPage = observer(() => {
 
         {postsUsersStore.hasData && (
           <Box>
-            <PostsGrid itemsPerPageParam={8}/>
-            <UsersGrid itemsPerPageParam={4}/>
+            <PostsGrid itemsPerPageParam={8} />
+            <UsersGrid itemsPerPageParam={4} />
           </Box>
         )}
       </Box>

@@ -20,9 +20,9 @@ export const Navigation = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          SPA Test App
+          SPA
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx={{ display: 'flex', gap: 1 }} >
           {navItems.map((item) => (
             <Button
               key={item.path}
