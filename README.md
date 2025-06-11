@@ -1,4 +1,4 @@
-# SPA Appl
+# SPA 
 
 Современное одностраничное приложение (SPA) на **React**, **MobX** и **Material UI**.  
 Проект демонстрирует лучшие практики управления состоянием, обработки ошибок и построения адаптивного интерфейса.
@@ -7,22 +7,24 @@
 
 ## Возможности
 
-- 📚 **Albums**: Просмотр альбомов с пагинацией и обработкой ошибок.
-- 📝 **Posts & Users**: Одновременная загрузка постов и пользователей с раздельным отображением ошибок.
-- 🔢 **Counter**: Простой счётчик на MobX с инкрементом, декрементом и сбросом.
-- ⚡ **Global and local error handling**: ErrorBoundary, ErrorPage и переиспользуемый ErrorMessage.
-- 🎨 **Material UI**: Современный, адаптивный и доступный дизайн.
-- 🔄 **Loading states**: Дружелюбные индикаторы загрузки для асинхронных операций.
+-  **Albums**: Просмотр альбомов с пагинацией и обработкой ошибок.
+-  **Posts & Users**: Одновременная загрузка постов и пользователей с раздельным отображением ошибок.
+-  **Counter**: Простой счётчик на MobX с инкрементом, декрементом и сбросом.
+-  **Global and local error handling**: ErrorBoundary, ErrorPage и переиспользуемый ErrorMessage.
+-  **Material UI**: Современный, адаптивный и доступный дизайн.
+-  **Loading states**: Индикаторы загрузки для асинхронных операций.
 
 ---
 
 ## Технологии
 
 - [React](https://react.dev/)
+- [React-Router](https://reactrouter.com/)
 - [MobX](https://mobx.js.org/ru/)
 - [Material UI (MUI)](https://mui.com/)
 - [Axios](https://axios-http.com/)
 - [TypeScript](https://www.typescriptlang.org/)
+
 
 ---
 
@@ -30,27 +32,18 @@
 
 ### Необходимое ПО
 
-- [Node.js](https://nodejs.org/) (рекомендуется v18+)
+- [Node.js](https://nodejs.org/) (v18+)
 - [npm](https://www.npmjs.com/) или [yarn](https://yarnpkg.com/)
 
 ### Установка
 
 ```bash
-git clone https://github.com/your-username/spa-appl.git
+git clone https://github.com/MariaGins/spa-appl.git
 cd spa-appl
 npm install
 # или
 yarn install
 ```
-
-### Установка основных зависимостей вручную (если нужно)
-
-```bash
-npm install react react-dom mobx mobx-react-lite @mui/material @emotion/react @emotion/styled axios
-# или
-yarn add react react-dom mobx mobx-react-lite @mui/material @emotion/react @emotion/styled axios
-```
-
 ### Запуск приложения
 
 ```bash
@@ -58,50 +51,48 @@ npm run dev
 # или
 yarn run dev
 ```
-
-Приложение будет доступно по адресу [http://localhost:3000](http://localhost:3000).
-
 ---
 
 ## Структура проекта
 
 ```
+
 src/
-  components/    
+  components/   компоненты для общего пользования 
       AppCard.tsx
       ErrorMessage.tsx
       LoadingSpinner.tsx
-    error/
+    error/      компонента для обработки ошибки
       ErrorBoundary.tsx
-    features/
-      albums/
+    features/   функциональные компоненты
+      albums/   компоненты для отображения данных об альбомах
         AlbumsGrid.tsx
         AlbumCard.tsx
-      combined/
+      combined/  компоненты для отображения постов и авторов
         PostCard.tsx
         PostsGrid.tsx
         UserCard.tsx
         UsersGrid.tsx  
-      layout/
+      layout/    навигатор и пагинатор
         Layout.tsx
         Navigation.tsx
         SimplePagination.tsx
-  pages/
+  pages/         виртуальные страницы
     AlbumsPage.tsx
     CounterPage.tsx
     PostsUsersPage.tsx
     ErrorPage.tsx
-  state-management/
+  state-management/ глобальное состояние, доступное из всех компонентов
     RootStore.ts
     AlbumStore.ts
     PostsUsersStore.ts
     CounterStore.ts
-  services/
+  services/         HTTP клиенты
     ApiClient.ts
     ApiClientServer.ts
     types.ts
-App.tsx
-main.tsx
+App.tsx             корневой апликационный компонент
+main.tsx            точка входа в DOM
 ```
 
 ---
@@ -122,6 +113,12 @@ main.tsx
 
 ---
 
+## Возможные улучшения
+
+- перенос полной функциональности работы с пагинатором внутрь пагинатора, взаимодействующего с глобальным состоянием. 
+
+---
+
 ## Автор
 
-- [Ваше имя](https://github.com/your-username)
+- [Maria Gins](https://github.com/MariaGins/SPA)
