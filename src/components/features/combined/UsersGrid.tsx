@@ -11,20 +11,20 @@ interface Props {
 }
 
 const UsersGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
-  const { postsUsersStore } = rootStore;
+  const { usersStore } = rootStore;
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageParam);
 
   return (
     <Box>
       <Divider sx={{ my: 4 }} />
       <Typography variant="h4" component="h2" gutterBottom>
-        Users ({postsUsersStore.users.length})
+        Users ({usersStore.users.length})
       </Typography>
 
-      {postsUsersStore.users.length > 0 && (
+      {usersStore.users.length > 0 && (
         <>
           <Grid container spacing={3} sx={{ mb: 4 }}>
-            {postsUsersStore
+            {usersStore
               .getPaginatedUsers(itemsPerPage)
               .map((user: User) => (
                 <Grid
@@ -36,12 +36,12 @@ const UsersGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
               ))}
           </Grid>
           <SimplePagination
-            totalItems={postsUsersStore.users.length}
-            onPageChange={(page) => postsUsersStore.setUserPage(page)}
+            totalItems={usersStore.users.length}
+            onPageChange={(page) => usersStore.setUserPage(page)}
             onItemsPerPageChange={(count) => setItemsPerPage(count)}
             gridName="users"
             itemsPerPageParam={itemsPerPage}
-            firstPage={postsUsersStore.currentUserPage}
+            firstPage={usersStore.currentUserPage}
           />
         </>
       )}

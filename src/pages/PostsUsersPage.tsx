@@ -13,11 +13,17 @@ import UsersGrid from '../components/features/combined/UsersGrid';
 import { ErrorMessage } from '../components/ErrorMessage';
 
 export const PostsUsersPage = observer(() => {
-  const { postsUsersStore } = rootStore;
+  const {postsStore, usersStore} = rootStore;
 
   const handleFetchData = () => {
-    postsUsersStore.fetchCombinedData();
+    postsStore.fetchPostsData();
+    usersStore.fetchUsersData();
+
   };
+
+  const combinedIsLoading = postsStore.isLoadingPosts || usersStore.isLoadingUsers;  
+  const hasCombinedData = postsStore.hasPostsData || usersStore.hasUsersData;
+
 
   return (
     <Container
@@ -51,10 +57,10 @@ export const PostsUsersPage = observer(() => {
               variant="contained"
               size="large"
               onClick={handleFetchData}
-              disabled={postsUsersStore.isLoading}
+              disabled={combinedIsLoading}
               sx={{ minWidth: 160 }}
             >
-              {postsUsersStore.isLoading ? (
+              {combinedIsLoading ? (
                 <Stack direction="row" spacing={1} alignItems="center">
                   <CircularProgress size={20} color="inherit" />
                   <span>Loading...</span>
@@ -65,26 +71,26 @@ export const PostsUsersPage = observer(() => {
             </Button>
           </Stack>
         </Box>
-        {postsUsersStore.errorPosts && (
+        {postsStore.errorPosts && (
           <ErrorMessage
             error={
-              postsUsersStore.errorPosts === 'Network Error'
+              postsStore.errorPosts === 'Network Error'
                 ? 'Failed to fetch posts: No connection to server'
-                : postsUsersStore.errorPosts
+                : postsStore.errorPosts
             }
           />
         )}
-        {postsUsersStore.errorUsers && (
+        {usersStore.errorUsers && (
           <ErrorMessage
             error={
-              postsUsersStore.errorUsers === 'Network Error'
+              usersStore.errorUsers === 'Network Error'
                 ? 'Failed to fetch users: No connection to server'
-                : postsUsersStore.errorUsers
+                : usersStore.errorUsers
             }
           />
         )}
 
-        {postsUsersStore.isLoading && (
+        {combinedIsLoading && (
           <Box
             display="flex"
             justifyContent="center"
@@ -100,9 +106,11 @@ export const PostsUsersPage = observer(() => {
           </Box>
         )}
 
-        {postsUsersStore.hasData && (
+        {hasCombinedData && (
           <Box>
+            {/* PostsGrid теперь будет брать данные из postsStore.posts */}
             <PostsGrid itemsPerPageParam={8} />
+            {/* UsersGrid теперь будет брать данные из usersStore.users */}
             <UsersGrid itemsPerPageParam={4} />
           </Box>
         )}
@@ -110,3 +118,95 @@ export const PostsUsersPage = observer(() => {
     </Container>
   );
 });
+
+//   return (
+//     <Container
+//       maxWidth={false}
+//       disableGutters
+//       sx={{
+//         width: '100%',
+//         minHeight: '100vh',
+//         boxSizing: 'border-box',
+//         p: 0,
+//         m: 0,
+//       }}
+//     >
+//       <Box sx={{ py: 2 }}>
+//         <Typography variant="h3" component="h1" gutterBottom align="center">
+//           Posts and Users
+//         </Typography>
+
+//         <Box
+//           sx={{
+//             p: 4,
+//             mb: 4,
+//             textAlign: 'center'
+//           }}
+//         >
+//           <Stack spacing={2} alignItems="center">
+//             <Typography variant="body1" color="text.secondary">
+//               Click the button to fetch Posts and Users simultaneously
+//             </Typography>
+//             <Button
+//               variant="contained"
+//               size="large"
+//               onClick={handleFetchData}
+//               disabled={postsUsersStore.isLoading}
+//               sx={{ minWidth: 160 }}
+//             >
+//               {postsUsersStore.isLoading ? (
+//                 <Stack direction="row" spacing={1} alignItems="center">
+//                   <CircularProgress size={20} color="inherit" />
+//                   <span>Loading...</span>
+//                 </Stack>
+//               ) : (
+//                 'Fetch Data'
+//               )}
+//             </Button>
+//           </Stack>
+//         </Box>
+//         {postsUsersStore.errorPosts && (
+//           <ErrorMessage
+//             error={
+//               postsUsersStore.errorPosts === 'Network Error'
+//                 ? 'Failed to fetch posts: No connection to server'
+//                 : postsUsersStore.errorPosts
+//             }
+//           />
+//         )}
+//         {postsUsersStore.errorUsers && (
+//           <ErrorMessage
+//             error={
+//               postsUsersStore.errorUsers === 'Network Error'
+//                 ? 'Failed to fetch users: No connection to server'
+//                 : postsUsersStore.errorUsers
+//             }
+//           />
+//         )}
+
+//         {postsUsersStore.isLoading && (
+//           <Box
+//             display="flex"
+//             justifyContent="center"
+//             alignItems="center"
+//             sx={{ py: 8 }}
+//           >
+//             <Stack spacing={2} alignItems="center">
+//               <CircularProgress size={48} />
+//               <Typography variant="body2" color="text.secondary">
+//                 Fetching posts and users...
+//               </Typography>
+//             </Stack>
+//           </Box>
+//         )}
+
+//         {postsUsersStore.hasData && (
+//           <Box>
+//             <PostsGrid itemsPerPageParam={8} />
+//             <UsersGrid itemsPerPageParam={4} />
+//           </Box>
+//         )}
+//       </Box>
+//     </Container>
+//   );
+// });
