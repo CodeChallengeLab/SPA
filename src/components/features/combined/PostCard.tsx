@@ -8,7 +8,7 @@ interface PostCardProps {
 }
 
 export const PostCard = ({ post }: PostCardProps) => {
-  const { postsStore, usersStore } = rootStore;
+  const { usersStore } = rootStore;
 
   const user = usersStore.users.find((user) => user.id === post.userId);
   const userName = user ? user.name : 'Unknown User';

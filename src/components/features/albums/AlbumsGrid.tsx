@@ -1,4 +1,4 @@
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, Stack } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "../../../state-management/RootStore";
 import { ErrorMessage } from "../../ErrorMessage";
@@ -19,8 +19,8 @@ const AlbumsGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
   if (albumsStore.isLoading) {
     return <LoadingSpinner message="Loading albums..." />;
   }
-  return (
-    <Box width="100%" maxWidth="none">
+  return (    
+    <Stack spacing={3}>
       <Typography variant="h3" component="h1" gutterBottom>
         Albums
       </Typography>
@@ -29,7 +29,7 @@ const AlbumsGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
         <>
           <Grid container spacing={3}>
             {albumsStore.albums.slice(page * itemsPerPage - itemsPerPage, page * itemsPerPage).map((album) => (
-              <Grid key={album.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+              <Grid key={album.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>              
                 <AlbumCard album={album} />
               </Grid>
             ))}
@@ -44,7 +44,7 @@ const AlbumsGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
           />
         </>
       )}
-    </Box>
+    </Stack>
   );
 });
 

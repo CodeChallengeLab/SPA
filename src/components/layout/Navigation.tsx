@@ -3,7 +3,7 @@ import {
   Toolbar,
   Typography,
   Button,
-  Box,
+  Stack,
 } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export const Navigation = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           SPA
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1 }} >
+        <Stack direction="row" spacing={1} >
           {navItems.map((item) => (
             <Button
               key={item.path}
@@ -37,7 +37,7 @@ export const Navigation = () => {
               {item.label}
             </Button>
           ))}
-        </Box>
+        </Stack>
       </Toolbar>
     </AppBar>
   );

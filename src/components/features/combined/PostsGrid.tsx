@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Box, Typography, Grid } from '@mui/material';
+import { Typography, Grid, Stack } from '@mui/material';
 import { rootStore } from '../../../state-management/RootStore';
 import { PostCard } from './PostCard';
 import type { Post } from '../../../services/types';
@@ -15,14 +15,14 @@ const PostsGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageParam);
 
   return (
-    <Box>
-      <Typography variant="h4" component="h2" gutterBottom sx={{ mt: 4 }}>
+    <Stack spacing={3}>
+      <Typography variant="h4" component="h2" gutterBottom >
         Posts ({postsStore.posts.length})
       </Typography>
 
       {postsStore.posts.length > 0 && (
         <>
-          <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid container spacing={3} >
             {postsStore
               .getPaginatedPosts(itemsPerPage)
               .map((post: Post) => (
@@ -44,7 +44,7 @@ const PostsGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
           />
         </>
       )}
-    </Box>
+    </Stack>
   );
 });
 export default PostsGrid;

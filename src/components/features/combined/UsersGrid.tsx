@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Box, Typography, Grid, Divider } from '@mui/material';
+import { Typography, Grid, Divider, Stack } from '@mui/material';
 import { rootStore } from '../../../state-management/RootStore';
 import { UserCard } from './UserCard';
 import type { User } from '../../../services/types';
@@ -15,7 +15,7 @@ const UsersGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageParam);
 
   return (
-    <Box>
+    <Stack spacing={3} sx={{ py: 2 }}>
       <Divider sx={{ my: 4 }} />
       <Typography variant="h4" component="h2" gutterBottom>
         Users ({usersStore.users.length})
@@ -23,7 +23,7 @@ const UsersGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
 
       {usersStore.users.length > 0 && (
         <>
-          <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid container spacing={3} >
             {usersStore
               .getPaginatedUsers(itemsPerPage)
               .map((user: User) => (
@@ -45,7 +45,7 @@ const UsersGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
           />
         </>
       )}
-    </Box>
+    </Stack>
   );
 });
 
