@@ -1,96 +1,79 @@
 import { observer } from 'mobx-react-lite';
+import { useState } from 'react';
 import {
   Container,
   Box,
   Typography,
   Button,
   Stack,
-  CircularProgress
+  CircularProgress,
+  Alert
 } from '@mui/material';
 import { rootStore } from '../state-management/RootStore';
 import PostsGrid from '../components/features/combined/PostsGrid';
 import UsersGrid from '../components/features/combined/UsersGrid';
-import { ErrorMessage } from '../components/ErrorMessage';
 
 export const PostsUsersPage = observer(() => {
   const { postsStore, usersStore } = rootStore;
+  const { fetchPostsData, isLoadingPosts, errorPosts, posts } = postsStore;  
+  const { fetchUsersData, isLoadingUsers, errorUsers, users } = usersStore;
+  const [hasInitiatedFetch, setHasInitiatedFetch] = useState(false);  
 
   const handleFetchData = () => {
-    postsStore.fetchPostsData();
-    usersStore.fetchUsersData();
-
+    setHasInitiatedFetch(true);
+    fetchPostsData();
+    fetchUsersData();
   };
 
-  const combinedIsLoading = postsStore.isLoadingPosts || usersStore.isLoadingUsers;
-  const hasCombinedData = postsStore.hasPostsData || usersStore.hasUsersData;
+  const isLoading = isLoadingPosts || isLoadingUsers;
+  const hasData = posts.length > 0 || users.length > 0;
+  const hasErrors = errorPosts || errorUsers;  
+  const shouldShowContent = hasData || isLoading || hasInitiatedFetch;
 
   return (
-    <Container
-      maxWidth={false}
-      disableGutters
-    >
-      <Stack spacing={3} >
+    <Container maxWidth={false} disableGutters>
+      <Stack spacing={3}>
         <Typography variant="h3" component="h1" gutterBottom align="center">
           Posts and Users
-        </Typography>
+        </Typography>        
         <Stack spacing={2} alignItems="center">
           <Button
             variant="contained"
             size="large"
             onClick={handleFetchData}
-            disabled={combinedIsLoading}
+            disabled={isLoading}
             sx={{ minWidth: 160 }}
           >
-            {combinedIsLoading ? (
+            {isLoading ? (
               <Stack direction="row" spacing={1} alignItems="center">
                 <CircularProgress size={20} color="inherit" />
                 <span>Loading...</span>
               </Stack>
             ) : (
-              'Fetch Data'
+              hasData ? 'Refresh Data' : 'Fetch Data'
             )}
           </Button>
-        </Stack>
-        {postsStore.errorPosts && (
-          <ErrorMessage
-            error={
-              postsStore.errorPosts === 'Network Error'
-                ? 'Failed to fetch posts: No connection to server'
-                : postsStore.errorPosts
-            }
-          />
-        )}
-        {usersStore.errorUsers && (
-          <ErrorMessage
-            error={
-              usersStore.errorUsers === 'Network Error'
-                ? 'Failed to fetch users: No connection to server'
-                : usersStore.errorUsers
-            }
-          />
-        )}
-
-        {combinedIsLoading && (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ py: 8 }}
-          >
-            <Stack spacing={2} alignItems="center">
-              <CircularProgress size={48} />
-              <Typography variant="body2" color="text.secondary">
-                Fetching posts and users...
-              </Typography>
-            </Stack>
-          </Box>
-        )}
-
-        {hasCombinedData && (
-          <Box>
+        </Stack>       
+        {shouldShowContent && (
+          <Box>            
             <PostsGrid itemsPerPageParam={8} />
             <UsersGrid itemsPerPageParam={4} />
           </Box>
+        )}        
+        {hasInitiatedFetch && !isLoading && !hasData && hasErrors && (
+          <Alert severity="info" sx={{ textAlign: 'center' }}>
+            <Typography variant="h6">Unable to load data</Typography>
+            <Typography variant="body2" sx={{ mb: 2 }}>
+              Please check your connection and try again
+            </Typography>
+            <Button 
+              variant="outlined" 
+              onClick={handleFetchData}
+              size="small"
+            >
+              Try Again
+            </Button>
+          </Alert>
         )}
       </Stack>
     </Container>

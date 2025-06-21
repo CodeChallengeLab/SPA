@@ -20,7 +20,7 @@
 
 - [React](https://react.dev/)
 - [React-Router](https://reactrouter.com/)
-- [MobX](https://mobx.js.org/ru/)
+- [MobX](https://mobx.js.org)
 - [Material UI (MUI)](https://mui.com/)
 - [Axios](https://axios-http.com/)
 - [TypeScript](https://www.typescriptlang.org/)

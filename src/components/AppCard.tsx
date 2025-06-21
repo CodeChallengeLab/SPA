@@ -7,7 +7,8 @@ interface AppCardProps {
 }
 
 export const AppCard = ({ children, actions }: AppCardProps) => (
-  <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+  <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column',
+       minHeight: 180, borderRadius: 6 }}>
     <CardContent sx={{ flexGrow: 1 }}>
       {children}
     </CardContent>

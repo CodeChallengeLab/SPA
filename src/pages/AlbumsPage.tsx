@@ -35,3 +35,4 @@ export const AlbumsPage = observer(() => {
     </Container>
   );
 });
+

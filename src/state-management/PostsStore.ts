@@ -3,7 +3,7 @@ import type { Post } from '../services/types';
 import { apiClient } from '../services/ApiClientServer';
 
 export class PostsStore {
-  private _currentPostPage: number = 1;
+  private _currentPostPage: number = 1;  
   posts: Post[] = [];
   isLoadingPosts = false;
   errorPosts: string | null = null;
@@ -24,11 +24,12 @@ export class PostsStore {
     const start = (this._currentPostPage - 1) * itemsPerPage;
     return this.posts.slice(start, start + itemsPerPage);
   }
-
+  
   fetchPostsData = async () => {
     this.isLoadingPosts = true;
     this.errorPosts = null;
     try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
       const postsResult = await apiClient.getPosts();
       runInAction(() => {
         this.posts = postsResult;
@@ -37,14 +38,10 @@ export class PostsStore {
     } catch (error) {
       runInAction(() => {
         this.errorPosts =
-          error instanceof Error ? error.message : 'Failed to fetch posts';
+          error instanceof Error ? 'Failed to fetch posts' : 'Unknown posts error';
         this.posts = [];
         this.isLoadingPosts = false;
       });
     }
   };
-
-  get hasPostsData() {
-    return this.posts.length > 0;
-  }
 }

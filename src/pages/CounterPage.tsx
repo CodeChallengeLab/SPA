@@ -6,20 +6,22 @@ export const CounterPage = observer(() => {
   const { counterStore } = rootStore;
 
   return (
-    <Container sx={{ width: '100vw',
-        minHeight: '100vh',
-        minWidth: '100vw',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',        
-        p: 0,
-        m: 0,}}>
+    <Container sx={{
+      width: '100vw',
+      minHeight: '100vh',
+      minWidth: '100vw',
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      p: 0,
+      m: 0,
+    }}>
       <Typography variant="h3" component="h1" gutterBottom>
         Counter
       </Typography>
 
-      <Typography variant="h2" component="div" sx={{ my: 2}}>
+      <Typography variant="h2" component="div" sx={{ my: 2 }}>
         {counterStore.count}
       </Typography>
 

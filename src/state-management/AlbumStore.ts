@@ -3,7 +3,7 @@ import { apiClient } from "../services/ApiClientServer";
 import type { Album } from "../services/types";
 
 export class AlbumsStore {
-  private _currentPage: number = 1;
+  private _currentPage: number = 1;  
   albums: Album[] = [];
   isLoading = false;
   error: string | null = null;
@@ -17,16 +17,14 @@ export class AlbumsStore {
   }
   set currentPage(page: number) {
     this._currentPage = Math.max(1, page);
-  }
-  setPage(page: number) {
-  this._currentPage = Math.max(1, page);
-}
+  }  
 
   fetchAlbums = async () => {
     this.isLoading = true;
     this.error = null;
 
     try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
       const albums = await apiClient.getAlbums();
       runInAction(() => {
         this.albums = albums;

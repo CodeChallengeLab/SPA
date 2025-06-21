@@ -3,7 +3,7 @@ import type { User } from '../services/types';
 import { apiClient } from '../services/ApiClientServer';
 
 export class UsersStore {
-  private _currentUserPage: number = 1;
+  private _currentUserPage: number = 1;  
   users: User[] = [];
   isLoadingUsers = false;
   errorUsers: string | null = null;
@@ -23,12 +23,13 @@ export class UsersStore {
   getPaginatedUsers(itemsPerPage: number) {
     const start = (this._currentUserPage - 1) * itemsPerPage;
     return this.users.slice(start, start + itemsPerPage);
-  }
+  } 
 
   fetchUsersData = async () => {
     this.isLoadingUsers = true;
     this.errorUsers = null;
     try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
       const usersResult = await apiClient.getUsers();
       runInAction(() => {
         this.users = usersResult;
@@ -37,14 +38,10 @@ export class UsersStore {
     } catch (error) {
       runInAction(() => {
         this.errorUsers =
-          error instanceof Error ? error.message : 'Failed to fetch users';
+          error instanceof Error ? 'Failed to fetch users' : 'Unknown users error';
         this.users = [];
         this.isLoadingUsers = false;
       });
     }
-  };
-
-  get hasUsersData() {
-    return this.users.length > 0;
-  }
+  };  
 }
