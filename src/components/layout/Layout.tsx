@@ -1,13 +1,23 @@
-import { Box, Container } from '@mui/material';
+import { Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Navigation } from './Navigation';
 
 export const Layout = () => (
-  <Box sx={{ minHeight: '100vh', width: '100vw', backgroundColor: 'grey.50' }}>
+  <Stack
+    sx={{
+      minHeight: '100vh',
+      width: '100vw',
+      backgroundColor: 'grey.50'
+    }}
+  >
     <Navigation />
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Stack sx={{
+      py: 4,
+      px: 3,
+      flex: 1,
+      overflow: 'auto'
+    }}>
       <Outlet />
-    </Container>
-  </Box>
-
+    </Stack>
+  </Stack>
 );

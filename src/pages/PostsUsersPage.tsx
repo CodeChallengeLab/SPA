@@ -15,9 +15,9 @@ import UsersGrid from '../components/features/combined/UsersGrid';
 
 export const PostsUsersPage = observer(() => {
   const { postsStore, usersStore } = rootStore;
-  const { fetchPostsData, isLoadingPosts, errorPosts, posts } = postsStore;  
+  const { fetchPostsData, isLoadingPosts, errorPosts, posts } = postsStore;
   const { fetchUsersData, isLoadingUsers, errorUsers, users } = usersStore;
-  const [hasInitiatedFetch, setHasInitiatedFetch] = useState(false);  
+  const [hasInitiatedFetch, setHasInitiatedFetch] = useState(false);
 
   const handleFetchData = () => {
     setHasInitiatedFetch(true);
@@ -27,16 +27,16 @@ export const PostsUsersPage = observer(() => {
 
   const isLoading = isLoadingPosts || isLoadingUsers;
   const hasData = posts.length > 0 || users.length > 0;
-  const hasErrors = errorPosts || errorUsers;  
+  const hasErrors = errorPosts || errorUsers;
   const shouldShowContent = hasData || isLoading || hasInitiatedFetch;
 
   return (
-    <Container maxWidth={false} disableGutters>
-      <Stack spacing={3}>
+    <Container maxWidth={false} disableGutters sx={{ width: '100%', flex: 1 }}>
+      <Stack spacing={3} sx={{ width: '100%', flex: 1 }}>
         <Typography variant="h3" component="h1" gutterBottom align="center">
           Posts and Users
-        </Typography>        
-        <Stack spacing={2} alignItems="center">
+        </Typography>
+        <Stack spacing={2} sx={{ width: '100%', flex: 1 }} alignItems="center">
           <Button
             variant="contained"
             size="large"
@@ -53,21 +53,21 @@ export const PostsUsersPage = observer(() => {
               hasData ? 'Refresh Data' : 'Fetch Data'
             )}
           </Button>
-        </Stack>       
+        </Stack>
         {shouldShowContent && (
-          <Box>            
+          <Box>
             <PostsGrid itemsPerPageParam={8} />
             <UsersGrid itemsPerPageParam={4} />
           </Box>
-        )}        
+        )}
         {hasInitiatedFetch && !isLoading && !hasData && hasErrors && (
           <Alert severity="info" sx={{ textAlign: 'center' }}>
             <Typography variant="h6">Unable to load data</Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
               Please check your connection and try again
             </Typography>
-            <Button 
-              variant="outlined" 
+            <Button
+              variant="outlined"
               onClick={handleFetchData}
               size="small"
             >

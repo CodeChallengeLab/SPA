@@ -23,8 +23,7 @@ export class AlbumsStore {
     this.isLoading = true;
     this.error = null;
 
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+    try {      
       const albums = await apiClient.getAlbums();
       runInAction(() => {
         this.albums = albums;

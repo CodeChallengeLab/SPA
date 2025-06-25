@@ -26,8 +26,8 @@ const AlbumsGrid: FC<Props> = observer(({ itemsPerPageParam }) => {
       <Typography variant="h3" component="h1" gutterBottom>
         Albums
       </Typography>      
-      {error && <ErrorMessage error={error} />}      
-      <Grid container spacing={3}>
+      {error && <ErrorMessage error={error}/>}      
+      <Grid container spacing={3} >
         {isLoading && !  error ? (          
           Array.from({ length: itemsPerPage }).map((_, index) => (
             <Grid 

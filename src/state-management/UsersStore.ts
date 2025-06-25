@@ -28,8 +28,7 @@ export class UsersStore {
   fetchUsersData = async () => {
     this.isLoadingUsers = true;
     this.errorUsers = null;
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+    try {      
       const usersResult = await apiClient.getUsers();
       runInAction(() => {
         this.users = usersResult;

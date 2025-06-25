@@ -1,21 +1,19 @@
 import { observer } from 'mobx-react-lite';
-import { Container, Typography, Button } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { rootStore } from '../state-management/RootStore';
 
 export const CounterPage = observer(() => {
   const { counterStore } = rootStore;
 
   return (
-    <Container sx={{
-      width: '100vw',
-      minHeight: '100vh',
-      minWidth: '100vw',
-      boxSizing: 'border-box',
+    <Box sx={{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      p: 0,
-      m: 0,
+      justifyContent: 'center',
+      flex: 1,
+      width: '100%',
+      height: '100%'
     }}>
       <Typography variant="h3" component="h1" gutterBottom>
         Counter
@@ -25,19 +23,42 @@ export const CounterPage = observer(() => {
         {counterStore.count}
       </Typography>
 
-      <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'row', gap: 2, justifyContent: 'center' }}>
-        <Button onClick={counterStore.decrement} variant="contained" size="large" sx={{ borderRadius: 6, minWidth: 80, height: 56 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        gap: 2, 
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        width: '100%',
+        maxWidth: '400px'
+      }}>
+        <Button 
+          onClick={counterStore.decrement} 
+          variant="contained" 
+          size="large" 
+          sx={{ borderRadius: 6, minWidth: 80, height: 56 }}
+        >
           -1
         </Button>
 
-        <Button onClick={counterStore.reset} variant="contained" color="secondary" size="large" sx={{ borderRadius: 6, minWidth: 100, height: 56 }}>
+        <Button 
+          onClick={counterStore.reset} 
+          variant="contained" 
+          color="secondary" 
+          size="large" 
+          sx={{ borderRadius: 6, minWidth: 100, height: 56 }}
+        >
           Reset
         </Button>
 
-        <Button onClick={counterStore.increment} variant="contained" size="large" sx={{ borderRadius: 6, minWidth: 80, height: 56 }}>
+        <Button 
+          onClick={counterStore.increment} 
+          variant="contained" 
+          size="large" 
+          sx={{ borderRadius: 6, minWidth: 80, height: 56 }}
+        >
           +1
         </Button>
-      </Container>
-    </Container>
+      </Box>
+    </Box>
   );
 });

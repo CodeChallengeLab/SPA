@@ -28,8 +28,7 @@ export class PostsStore {
   fetchPostsData = async () => {
     this.isLoadingPosts = true;
     this.errorPosts = null;
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+    try {      
       const postsResult = await apiClient.getPosts();
       runInAction(() => {
         this.posts = postsResult;
